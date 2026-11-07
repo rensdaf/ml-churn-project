@@ -5,27 +5,23 @@ on:
     branches:
       - main
       - develop
-
   pull_request:
     branches:
       - main
       - develop
 
 jobs:
-
   test:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.12" # Aligné avec votre Dockerfile (ou "3.11")
 
       - name: Installation
         run: |
@@ -33,5 +29,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Tests
+        # Définition du PYTHONPATH pour que pytest trouve le dossier 'api'
+        env:
+          PYTHONPATH: .
         run: |
           pytest
